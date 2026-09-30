@@ -1,5 +1,7 @@
 ## DashVMC: Real-Time Discrete World Model Control in Geometry Dash
 
+**Accepted at [PTA: From Pretrained Representations to Acting Agents](https://ptaworkshop.github.io/), a NeurIPS 2026 workshop.**
+
 https://github.com/user-attachments/assets/1de92e9c-cc41-48cc-8305-c0d4491b676b
 
 DashVMC is an end-to-end discrete world-model agent that controls the original, non-paused Geometry Dash game from captured screen pixels. It combines an FSQ tokenizer, an action-conditioned transformer world model, and a lightweight actor-critic initialized by behavioural cloning and optimized with PPO entirely in autoregressive latent rollouts.
@@ -19,9 +21,9 @@ Training uses approximately two hours of gameplay captured at a nominal 30 FPS c
 ```bibtex
 @misc{tariolle2026dashvmc,
   title  = {DashVMC: Real-Time Discrete World Model Control in Geometry Dash},
-  author = {Florent Tariolle},
+  author = {Florent Tariolle and Florian Yger},
   year   = {2026},
-  note   = {Preprint},
+  note   = {Preprint; accepted at the PTA workshop, NeurIPS 2026},
   url    = {https://tariolle.github.io/dash-vmc/}
 }
 ```
