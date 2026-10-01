@@ -1,6 +1,6 @@
 ## DashVMC: Real-Time Discrete World Model Control in Geometry Dash
 
-**Accepted at [PTA: From Pretrained Representations to Acting Agents](https://ptaworkshop.github.io/), a NeurIPS 2026 workshop.**
+**PTA workshop, NeurIPS 2026.**
 
 https://github.com/user-attachments/assets/1de92e9c-cc41-48cc-8305-c0d4491b676b
 
@@ -9,22 +9,24 @@ DashVMC is an end-to-end discrete world-model agent that controls the original, 
 Training uses approximately two hours of gameplay captured at a nominal 30 FPS cadence, including less than 20 minutes of expert segments; all learning is offline, without any real-environment interaction by the agent. The decoder-free capture-to-action path sustains live control at 60 FPS on an RTX 2060.
 
 <p align="center">
-   <b>[ <a href="https://tariolle.github.io/dash-vmc/static/pdfs/dashvmc.pdf">Preprint</a> | <a href="https://tariolle.github.io/dash-vmc/">Website</a> ]</b>
+   <b>[ <a href="https://arxiv.org/abs/2609.40003">arXiv</a> | <a href="https://tariolle.github.io/dash-vmc/">Website</a> ]</b>
 </p>
 
 <p align="center">
   <img src="docs/static/images/pipeline_live.png" width="96%">
 </p>
 
-## Cite this preprint
+## Citation
 
 ```bibtex
 @misc{tariolle2026dashvmc,
   title  = {DashVMC: Real-Time Discrete World Model Control in Geometry Dash},
   author = {Florent Tariolle and Florian Yger},
   year   = {2026},
-  note   = {Preprint; accepted at the PTA workshop, NeurIPS 2026},
-  url    = {https://tariolle.github.io/dash-vmc/}
+  eprint = {2609.40003},
+  archivePrefix = {arXiv},
+  note   = {PTA workshop, NeurIPS 2026},
+  url    = {https://arxiv.org/abs/2609.40003}
 }
 ```
 
