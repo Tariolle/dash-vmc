@@ -6,7 +6,7 @@ on:
     paths:
       - 'paper/main.tex'
       - 'paper/dashvmc-preprint.tex'
-      - 'paper/dashvmc-submission.tex'
+      - 'paper/dashvmc-camera-ready.tex'
       - 'paper/fairpreprint.cls'
       - 'paper/references.bib'
       - 'paper/neurips_2026.sty'
@@ -23,7 +23,7 @@ on:
     paths:
       - 'paper/main.tex'
       - 'paper/dashvmc-preprint.tex'
-      - 'paper/dashvmc-submission.tex'
+      - 'paper/dashvmc-camera-ready.tex'
       - 'paper/fairpreprint.cls'
       - 'paper/references.bib'
       - 'paper/neurips_2026.sty'
@@ -39,7 +39,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: write
+  contents: read
 
 jobs:
   build:
@@ -74,14 +74,11 @@ jobs:
           root_file: dashvmc-preprint.tex
           latexmk_use_xelatex: true
 
-      - name: Compile anonymous submission
+      - name: Compile workshop camera-ready
         uses: xu-cheng/latex-action@v3
         with:
           working_directory: paper
-          root_file: dashvmc-submission.tex
-
-      - name: Copy paper PDF to docs
-        run: cp paper/dashvmc-preprint.pdf docs/static/pdfs/dashvmc.pdf
+          root_file: dashvmc-camera-ready.tex
 
       - name: Upload PDF artifact
         uses: actions/upload-artifact@v4
@@ -89,15 +86,8 @@ jobs:
           name: public-preprint
           path: paper/dashvmc-preprint.pdf
 
-      - name: Commit updated PDF
-        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          if git diff --quiet docs/static/pdfs/dashvmc.pdf; then
-            echo "No PDF changes"
-            exit 0
-          fi
-          git add docs/static/pdfs/dashvmc.pdf
-          git commit -m "ci: rebuild paper PDF [skip ci]"
-          git push
+      - name: Upload camera-ready artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: workshop-camera-ready
+          path: paper/dashvmc-camera-ready.pdf

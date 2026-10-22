@@ -1,6 +1,6 @@
 % Shared manuscript semantics. The document class and publication-specific
-% presentation are selected by dashvmc-preprint.tex or dashvmc-submission.tex.
-\ifdashvmcsubmission
+% presentation are selected by dashvmc-preprint.tex or dashvmc-camera-ready.tex.
+\ifdashvmcworkshop
   \usepackage[utf8]{inputenc}
   \usepackage[T1]{fontenc}
   \usepackage{courier}
@@ -17,8 +17,9 @@
 \usepackage{graphicx}
 \usepackage{placeins}
 \usepackage{flafter}
+\usepackage{needspace}
 
-\ifdashvmcsubmission
+\ifdashvmcworkshop
   \definecolor{citeblue}{HTML}{4A90E2}
   \hypersetup{
     colorlinks=true,
@@ -26,7 +27,7 @@
     linkcolor=citeblue,
     urlcolor=citeblue,
     pdftitle={DashVMC: Real-Time Discrete World Model Control in Geometry Dash},
-    pdfauthor={}
+    pdfauthor={Florent Tariolle and Florian Yger}
   }
 \else
   \hypersetup{
@@ -56,9 +57,21 @@
   Action-conditioned continuations and rollout diagnostics show that the model remains useful for control despite imperfect long-horizon fidelity.%
 }
 
-\ifdashvmcsubmission
+\newcommand{\dashvmcacknowledgments}{%
+  We thank Cl\'ement Chatelain and Robin Condat for their guidance during the Representation Learning course at INSA Rouen Normandy, in which this project began, and CRIANN for providing the computing resources used for training.
+  We thank Ma{\"e}l Planchot for contributing gameplay data.
+  Geometry Dash is developed by RobTop Games.%
+}
+
+\ifdashvmcworkshop
   \title{DashVMC: Real-Time Discrete World Model Control\\in Geometry Dash}
-  \author{Anonymous Author(s)}
+  \author{%
+    Florent Tariolle\thanks{Corresponding author: \href{mailto:florent.tariolle@insa-rouen.fr}{\texttt{florent.tariolle@insa-rouen.fr}}.} \\
+    INSA Rouen Normandy
+    \And
+    Florian Yger \\
+    INSA Rouen Normandy, LITIS
+  }
 \else
   \title{%
     DashVMC\\[0.1em]
@@ -83,7 +96,7 @@
 
 \maketitle
 
-\ifdashvmcsubmission
+\ifdashvmcworkshop
   \begin{abstract}
     \dashvmcabstract
   \end{abstract}
@@ -107,6 +120,7 @@ The apparent simplicity therefore isolates a demanding question: can an agent le
 
 DashVMC follows the perception--dynamics--control organization of World Models~\citep{ha2018world}: it compresses each frame into a discrete grid, learns action-conditioned grid dynamics, initializes a lightweight action model with BC, and refines it with PPO~\citep{schulman2017ppo} in the frozen model.
 
+\needspace{5\baselineskip}
 Our contributions are:
 \begin{enumerate}
   \item a compact discrete, action-conditioned world model learned from approximately two hours of offline gameplay, whose rollouts support policy refinement without further live-game interaction;
@@ -138,13 +152,13 @@ DashVMC is organized around a simple loop: recorded play trains a world model, t
 The visual encoder, dynamics model, and action model are trained in sequence and then frozen for deployment.
 Figure~\ref{fig:pipeline} shows how the same learned state supports both imagined practice and live reaction.
 
-\ifdashvmcsubmission
+\ifdashvmcworkshop
   \begin{figure}[!htbp]
 \else
   \begin{figure}[!htbp]
 \fi
   \centering
-  \ifdashvmcsubmission
+  \ifdashvmcworkshop
     \includegraphics[width=\textwidth]{figures/pipeline.pdf}
   \else
     \includegraphics[width=0.82\textwidth]{figures/pipeline.pdf}
@@ -162,7 +176,7 @@ Each spatial vector is independently quantized with iFSQ levels \(\fsqlevels\), 
 The tokenizer is trained on adjacent frames with reconstruction, temporal-slowness, and latent-uniformity objectives~\citep{xia2025grwm}.
 Once selected, its encoder is frozen; its decoder is used to visualize dreams but is not required by the action model.
 
-\ifdashvmcsubmission\else
+\ifdashvmcworkshop\else
   \FloatBarrier
 \fi
 \subsection{Action-conditioned dynamics}
@@ -406,9 +420,7 @@ Parallel grid prediction and latent-space feedback avoid autoregressive token ge
 
 Beyond its 45-step training horizon, the model feeds predicted grids and new actions back into context.
 Interactive rollouts reproduce scrolling terrain, camera and height changes, collisions, and avatar transformations; long continuations may remain coherent or eventually repeat, empty, or invent impossible geometry.
-\ifdashvmcsubmission\else
-  Video demonstrations of interactive level continuations are available on the \href{https://tariolle.github.io/dash-vmc/\#dreams}{project page}.
-\fi
+Video demonstrations of interactive level continuations are available on the \href{https://tariolle.github.io/dash-vmc/\#dreams}{project page}.
 
 \begin{table}[H]
   \centering
@@ -443,7 +455,7 @@ The trajectory-mean advantage is 0.165 nats per visual token (95\% episode-boots
 
 \begin{figure}[H]
   \centering
-  \ifdashvmcsubmission
+  \ifdashvmcworkshop
     \includegraphics[width=\textwidth]{figures/continuation.pdf}
   \else
     \includegraphics[width=0.70\textwidth]{figures/continuation.pdf}
@@ -510,13 +522,15 @@ Its latent rollouts form a learned environment for offline model-based reinforce
 The deployed pipeline meets the game's 60-Hz timing budget, while the spatial-only ablation shows that the learned dynamics can enable policy improvement without remaining in the live control path.
 Under data scarcity, the world model thus acts as an interface between past experience and future decisions without prescribing how it must be used: DashVMC uses that interface for imagined policy optimization, while planning-based agents could instead query it at evaluation time.
 
-\ifdashvmcsubmission\else
+\ifdashvmcworkshop
+  \begin{ack}
+    \dashvmcacknowledgments
+  \end{ack}
+\else
   \raggedbottom
   \clearpage
   \section*{Acknowledgments}
-  We thank Cl\'ement Chatelain and Robin Condat for their guidance during the Representation Learning course at INSA Rouen Normandy, in which this project began, and CRIANN for providing the computing resources used for training.
-  We thank Ma{\"e}l Planchot for contributing gameplay data.
-  Geometry Dash is developed by RobTop Games.
+  \dashvmcacknowledgments
 \fi
 
 \bibliographystyle{\dashvmcbibliographystyle}
