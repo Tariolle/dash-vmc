@@ -4,6 +4,7 @@
   \usepackage[utf8]{inputenc}
   \usepackage[T1]{fontenc}
   \usepackage{courier}
+  \usepackage{fontawesome5}
 \fi
 \usepackage{float}
 \usepackage{hyperref}
@@ -97,6 +98,12 @@
 \maketitle
 
 \ifdashvmcworkshop
+  \vspace{-0.12in}
+  {\centering\hypersetup{urlcolor=black}
+    \href{https://tariolle.github.io/dash-vmc/}{\faGlobe~Website}\qquad
+    \href{https://github.com/Tariolle/dash-vmc}{\faGithub~Code}\par}
+  \vspace{0.1in}
+
   \begin{abstract}
     \dashvmcabstract
   \end{abstract}
