@@ -56,7 +56,7 @@ The controlled V7 evaluator runs are complete for the first three official level
 1. Add the generated-continuation figure. (Done for the paper build; inspect final PDF placement.)
 2. Preserve the optimized deployment benchmark and its per-stage averages as the reported latency evidence.
 3. Move any SLS/IRIS discussion behind the DashVMC system results and keep the claim scoped.
-4. Compile the PDF and update `docs/static/pdfs/dashvmc.pdf`.
+4. Compile the camera-ready PDF (`make camera-ready`) and update arXiv; the website links to arXiv rather than hosting a PDF.
 
 ## Do Not Spend Time On Before August
 

@@ -13,9 +13,6 @@ preprint: $(PREPRINT).pdf
 
 camera-ready: $(CAMERA_READY).pdf
 
-website: $(PREPRINT).pdf
-	$(PY) -c "import shutil; shutil.copyfile('$(PREPRINT).pdf', '../docs/static/pdfs/dashvmc.pdf')"
-
 figures/pipeline.pdf: ../docs/pipeline.tex $(FIGURE_FONT)
 	$(PY) -c "import os; os.makedirs('figures', exist_ok=True)"
 	cd ../docs && $(FIGURE_TEX) pipeline.tex
@@ -49,4 +46,4 @@ $(CAMERA_READY).pdf: $(CAMERA_READY).tex main.tex references.bib neurips_2026.st
 clean:
 	$(PY) -c "import os; bases=['$(PREPRINT)','$(CAMERA_READY)','main']; suffixes=['.aux','.bbl','.blg','.log','.out','.pdf','.fls','.fdb_latexmk','.synctex.gz']; files=[base + suffix for base in bases for suffix in suffixes] + ['figures/pipeline.pdf','figures/continuation.pdf']; [os.remove(f) for f in files if os.path.exists(f)]"
 
-.PHONY: all preprint camera-ready website clean
+.PHONY: all preprint camera-ready clean
